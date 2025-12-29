@@ -68,7 +68,41 @@ class AuthService: ObservableObject {
     }
 
     // MARK: - Apple Sign In
-    // TODO: Implement Apple Sign In in Phase 2
+    func signInWithApple() async throws -> (user: User, isNewUser: Bool) {
+        let appleSignInService = AppleSignInService()
+        let result = try await appleSignInService.signInWithApple()
+
+        // Check if user already exists in Firestore
+        let userId = result.user.uid
+        let userDoc = try await db.collection("users").document(userId).getDocument()
+
+        if userDoc.exists {
+            // Existing user
+            let user = try userDoc.data(as: User.self)
+            self.currentUser = user
+            self.isAuthenticated = true
+            return (user, false)
+        } else {
+            // New user - create profile
+            let email = result.user.email ?? "noreply@privaterelay.appleid.com"
+            let displayName = result.user.displayName ?? "User"
+
+            let newUser = User(
+                id: userId,
+                email: email,
+                name: displayName,
+                profilePhotoURL: nil,
+                totalDistance: 0,
+                totalActivities: 0,
+                totalDuration: 0,
+                preferredUnits: .metric,
+                createdAt: Date()
+            )
+
+            try await createUser(newUser)
+            return (newUser, true)
+        }
+    }
 
     // MARK: - Firestore Operations
     private func createUser(_ user: User) async throws {

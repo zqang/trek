@@ -14,10 +14,16 @@ struct ContentView: View {
         Group {
             if authViewModel.isAuthenticated {
                 MainTabView()
+                    .environmentObject(authViewModel)
             } else {
                 OnboardingView()
                     .environmentObject(authViewModel)
             }
+        }
+        .sheet(isPresented: $authViewModel.showProfileSetup) {
+            ProfileSetupView()
+                .environmentObject(authViewModel)
+                .interactiveDismissDisabled(false)
         }
     }
 }

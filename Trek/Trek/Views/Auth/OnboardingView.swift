@@ -114,6 +114,7 @@ struct PermissionRow: View {
 
 // MARK: - Auth Selection
 struct AuthSelectionView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var showingLogin = false
     @State private var showingSignUp = false
 
@@ -128,6 +129,29 @@ struct AuthSelectionView: View {
             Spacer()
 
             VStack(spacing: 15) {
+                // Apple Sign In Button
+                AppleSignInButton {
+                    Task {
+                        await authViewModel.signInWithApple()
+                    }
+                }
+
+                // Divider
+                HStack {
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.gray.opacity(0.3))
+
+                    Text("or")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.gray.opacity(0.3))
+                }
+                .padding(.vertical, 5)
+
                 Button(action: { showingSignUp = true }) {
                     Text("Create Account")
                         .font(.headline)
@@ -147,8 +171,6 @@ struct AuthSelectionView: View {
                         .background(Color.accentColor.opacity(0.1))
                         .cornerRadius(12)
                 }
-
-                // TODO: Add Apple Sign In button in Phase 2
             }
             .padding(.horizontal, 30)
 
