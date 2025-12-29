@@ -22,6 +22,7 @@ class LocationService: NSObject, ObservableObject {
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var route: [LocationPoint] = []
     @Published var splits: [Split] = []
+    @Published var locationError: LocationError?
 
     // MARK: - Private Properties
     private let locationManager = CLLocationManager()
@@ -224,14 +225,63 @@ class LocationService: NSObject, ObservableObject {
 extension LocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last, isTracking, !isPaused else { return }
+        locationError = nil  // Clear error on successful update
         processLocation(location)
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        if let clError = error as? CLError {
+            switch clError.code {
+            case .denied:
+                locationError = .permissionDenied
+            case .locationUnknown:
+                locationError = .locationUnavailable
+            case .network:
+                locationError = .networkError
+            default:
+                locationError = .unknown(clError.localizedDescription)
+            }
+        } else {
+            locationError = .unknown(error.localizedDescription)
+        }
         print("Location manager failed with error: \(error.localizedDescription)")
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
+
+        // Clear or set error based on authorization
+        switch authorizationStatus {
+        case .denied, .restricted:
+            locationError = .permissionDenied
+        case .authorizedWhenInUse, .authorizedAlways:
+            locationError = nil
+        default:
+            break
+        }
+    }
+}
+
+// MARK: - Location Errors
+enum LocationError: LocalizedError {
+    case permissionDenied
+    case locationUnavailable
+    case networkError
+    case signalWeak
+    case unknown(String)
+
+    var errorDescription: String? {
+        switch self {
+        case .permissionDenied:
+            return "Location access is denied. Please enable it in Settings."
+        case .locationUnavailable:
+            return "Unable to determine your location. Make sure you're outdoors with a clear view of the sky."
+        case .networkError:
+            return "Network error while getting location. Check your connection."
+        case .signalWeak:
+            return "GPS signal is weak. Move to an area with better sky visibility."
+        case .unknown(let message):
+            return "Location error: \(message)"
+        }
     }
 }
