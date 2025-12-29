@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Trek App Icon Template -->
+<!-- Size: 1024x1024 (App Store size) -->
+<!-- Design: Mountain with route path -->
+<!-- Colors: Blue gradient (#007AFF to #34C759) -->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#007AFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34C759;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bgGradient)" rx="227"/>
+
+  <!-- Mountain (centered, scaled appropriately) -->
+  <g transform="translate(512, 512)">
+    <!-- Main mountain peak -->
+    <path d="M -200,150 L 0,-180 L 200,150 Z"
+          fill="url(#mountainGradient)"
+          stroke="#FFFFFF"
+          stroke-width="4"/>
+
+    <!-- Secondary peaks (left and right) -->
+    <path d="M -350,150 L -200,0 L -100,150 Z"
+          fill="#FFFFFF"
+          fill-opacity="0.6"/>
+    <path d="M 100,150 L 200,0 L 350,150 Z"
+          fill="#FFFFFF"
+          fill-opacity="0.6"/>
+  </g>
+
+  <!-- Route path at bottom (dotted line from start to end) -->
+  <g transform="translate(0, 750)">
+    <circle cx="150" cy="0" r="12" fill="#34C759"/>
+    <path d="M 150,0 Q 350,-30 512,-50 T 874,0"
+          stroke="#FFFFFF"
+          stroke-width="6"
+          stroke-dasharray="12,12"
+          fill="none"
+          opacity="0.9"/>
+    <circle cx="874" cy="0" r="12" fill="#FF3B30"/>
+  </g>
+</svg>

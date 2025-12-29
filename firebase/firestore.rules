@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to check if user owns the resource
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      // Users can read and write their own profile
+      allow read: if isAuthenticated() && isOwner(userId);
+      allow create: if isAuthenticated() && isOwner(userId);
+      allow update: if isAuthenticated() && isOwner(userId);
+      allow delete: if isAuthenticated() && isOwner(userId);
+    }
+
+    // Activities collection
+    match /activities/{activityId} {
+      // Users can read their own activities
+      allow read: if isAuthenticated() &&
+                     isOwner(resource.data.userId);
+
+      // Users can create activities for themselves
+      allow create: if isAuthenticated() &&
+                       isOwner(request.resource.data.userId) &&
+                       // Ensure userId matches authenticated user
+                       request.resource.data.userId == request.auth.uid;
+
+      // Users can update their own activities
+      allow update: if isAuthenticated() &&
+                       isOwner(resource.data.userId) &&
+                       // Ensure userId cannot be changed
+                       request.resource.data.userId == resource.data.userId;
+
+      // Users can delete their own activities
+      allow delete: if isAuthenticated() &&
+                       isOwner(resource.data.userId);
+    }
+
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
