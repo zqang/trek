@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Location Permission Keys -->
+    <!-- These keys must be added to your Xcode project's Info.plist -->
+    
+    <!-- Required for accessing location while app is in use -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Trek needs access to your location to track your activities and display your route on the map.</string>
+    
+    <!-- Required for accessing location in background (continuous tracking) -->
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Trek needs continuous access to your location to track your entire activity route, even when the app is in the background. This allows you to track long runs, rides, and hikes without keeping the app open.</string>
+    
+    <!-- Alternative: Only "Always" description (iOS 11+) -->
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Trek needs continuous access to your location to track your entire activity route in the background.</string>
+    
+    <!-- Background Modes -->
+    <!-- To enable background location tracking, add the following to your Info.plist: -->
+    <!-- In Xcode: Target → Signing & Capabilities → Background Modes → Enable "Location updates" -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>location</string>
+    </array>
+    
+    <!-- Optional: Motion Usage (for future features like step counting) -->
+    <key>NSMotionUsageDescription</key>
+    <string>Trek uses motion data to enhance activity tracking and provide accurate step counts.</string>
+    
+    <!-- Optional: Health Kit (for future integration) -->
+    <key>NSHealthShareUsageDescription</key>
+    <string>Trek would like to read your health data to provide comprehensive activity insights.</string>
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>Trek would like to save your activity data to the Health app.</string>
+</dict>
+</plist>
+
+<!--
+INTEGRATION INSTRUCTIONS:
+
+To add these permissions to your Xcode project:
+
+Method 1: Using Xcode's Info Tab
+1. Select your project in the navigator
+2. Select the Trek target
+3. Go to the "Info" tab
+4. Click the "+" button to add new keys
+5. Add each key with its corresponding string value
+
+Method 2: Using Property List File
+1. If you have an Info.plist file in your project
+2. Open it as source code (right-click → Open As → Source Code)
+3. Copy the relevant keys from above into your plist's <dict> section
+
+Method 3: Using Xcode's Capabilities
+For UIBackgroundModes:
+1. Select your project in the navigator
+2. Select the Trek target
+3. Go to "Signing & Capabilities" tab
+4. Click "+ Capability"
+5. Add "Background Modes"
+6. Check "Location updates"
+
+IMPORTANT NOTES:
+
+- These permission descriptions will be shown to users when requesting access
+- Be clear and specific about why you need each permission
+- Apple reviews these descriptions during app review
+- Generic or unclear descriptions may lead to app rejection
+- Only request permissions that you actually use in your app
+- Consider the user's privacy and only collect necessary data
+
+TESTING PERMISSIONS:
+
+During development:
+1. Run the app on a device or simulator
+2. When prompted, grant location permissions
+3. To reset permissions: Settings → General → Reset → Reset Location & Privacy
+4. Or Settings → [Your App] → Location → Select permission level
+
+For background tracking:
+1. Grant "Always" permission
+2. Start an activity
+3. Put the app in background or lock the device
+4. The app should continue tracking (check logs)
+5. Monitor battery usage during testing
+
+PRIVACY CONSIDERATIONS:
+
+- Always explain to users why background location is needed
+- Provide in-app settings to limit background tracking
+- Show location permission prompts at appropriate times (not on first launch)
+- Be transparent about data collection and usage
+- Implement opt-out mechanisms for background tracking
+- Monitor and optimize battery usage
+-->
