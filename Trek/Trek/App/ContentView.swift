@@ -51,10 +51,17 @@ struct MainTabView: View {
                     Label("Record", systemImage: "plus.circle.fill")
                 }
 
-            ProfileView()
-                .tabItem {
-                    Label("Profile", systemImage: "person.circle")
-                }
+            if let userId = authViewModel.currentUser?.id {
+                ProfileView(userId: userId)
+                    .tabItem {
+                        Label("Profile", systemImage: "person.circle")
+                    }
+            } else {
+                Text("Loading...")
+                    .tabItem {
+                        Label("Profile", systemImage: "person.circle")
+                    }
+            }
         }
     }
 }
