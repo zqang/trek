@@ -1,0 +1,58 @@
+# SwiftLint Configuration for Trek
+# https://github.com/realm/SwiftLint
+
+# Disable rules
+disabled_rules:
+  - trailing_whitespace
+  - todo
+  - line_length
+
+# Opt-in rules
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+  - explicit_init
+  - closure_spacing
+
+# Excluded files/directories
+excluded:
+  - Pods
+  - .build
+  - .swiftpm
+  - Trek.xcodeproj
+  - Trek.xcworkspace
+  - DerivedData
+
+# Rule configurations
+identifier_name:
+  min_length: 1
+  max_length:
+    warning: 50
+    error: 60
+  excluded:
+    - id
+    - db
+
+type_body_length:
+  warning: 300
+  error: 400
+
+file_length:
+  warning: 500
+  error: 1000
+
+function_body_length:
+  warning: 50
+  error: 100
+
+cyclomatic_complexity:
+  warning: 10
+  error: 20
+
+# Custom rules
+custom_rules:
+  no_print:
+    name: "No print statements"
+    regex: "print\\("
+    message: "Use proper logging instead of print()"
+    severity: warning
