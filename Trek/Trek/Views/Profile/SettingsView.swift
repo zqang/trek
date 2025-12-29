@@ -51,6 +51,25 @@ struct SettingsView: View {
                     }
                 }
 
+                // Sync Section
+                Section(header: Text("Sync & Offline")) {
+                    NavigationLink(destination: SyncStatusView()) {
+                        HStack {
+                            Text("Sync Status")
+                            Spacer()
+                            if SyncService.shared.hasPendingOperations {
+                                Text("\(SyncService.shared.pendingOperationsCount)")
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color.orange)
+                                    .cornerRadius(10)
+                            }
+                        }
+                    }
+                }
+
                 // Data Management Section
                 Section(header: Text("Data Management")) {
                     Button(action: {

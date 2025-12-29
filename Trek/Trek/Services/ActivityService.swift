@@ -9,17 +9,31 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+@MainActor
 class ActivityService {
     private let db = Firestore.firestore()
+    private let networkMonitor = NetworkMonitor.shared
+    private let offlineQueue = OfflineQueue.shared
+    private let maxRetries = 3
 
     // MARK: - Create Activity
     func saveActivity(_ activity: Activity) async throws -> String {
-        let docRef = try db.collection("activities").addDocument(from: activity)
+        // If offline, queue the operation
+        if !networkMonitor.isConnected {
+            offlineQueue.queueActivity(activity, operation: .saveActivity)
+            // Return a temporary ID
+            return "pending_\(UUID().uuidString)"
+        }
 
-        // Update user stats
-        try await updateUserStats(userId: activity.userId, activity: activity)
+        // Try to save with retry logic
+        return try await withRetry {
+            let docRef = try await db.collection("activities").addDocument(from: activity)
 
-        return docRef.documentID
+            // Update user stats
+            try await self.updateUserStats(userId: activity.userId, activity: activity)
+
+            return docRef.documentID
+        }
     }
 
     // MARK: - Read Activities
@@ -46,21 +60,66 @@ class ActivityService {
             throw ActivityServiceError.missingActivityId
         }
 
-        try db.collection("activities")
-            .document(activityId)
-            .setData(from: activity, merge: true)
+        // If offline, queue the operation
+        if !networkMonitor.isConnected {
+            offlineQueue.queueActivityUpdate(activity)
+            return
+        }
+
+        // Try to update with retry logic
+        try await withRetry {
+            try await db.collection("activities")
+                .document(activityId)
+                .setData(from: activity, merge: true)
+        }
     }
 
     // MARK: - Delete Activity
     func deleteActivity(id: String, userId: String) async throws {
-        // Fetch activity first to get stats for user update
-        let activity = try await fetchActivity(id: id)
+        // If offline, queue the operation
+        if !networkMonitor.isConnected {
+            offlineQueue.queueActivityDelete(activityId: id, userId: userId)
+            return
+        }
 
-        // Delete the activity
-        try await db.collection("activities").document(id).delete()
+        // Try to delete with retry logic
+        try await withRetry {
+            // Fetch activity first to get stats for user update
+            let activity = try await self.fetchActivity(id: id)
 
-        // Update user stats (subtract this activity's stats)
-        try await decrementUserStats(userId: userId, activity: activity)
+            // Delete the activity
+            try await db.collection("activities").document(id).delete()
+
+            // Update user stats (subtract this activity's stats)
+            try await self.decrementUserStats(userId: userId, activity: activity)
+        }
+    }
+
+    // MARK: - Retry Logic
+    private func withRetry<T>(maxAttempts: Int = 3, operation: @escaping () async throws -> T) async throws -> T {
+        var lastError: Error?
+
+        for attempt in 1...maxAttempts {
+            do {
+                return try await operation()
+            } catch {
+                lastError = error
+                print("Attempt \(attempt) failed: \(error.localizedDescription)")
+
+                // Don't retry if offline
+                if !networkMonitor.isConnected {
+                    throw error
+                }
+
+                // Wait before retrying (exponential backoff)
+                if attempt < maxAttempts {
+                    let delay = Double(attempt) * 1.0
+                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                }
+            }
+        }
+
+        throw lastError ?? ActivityServiceError.saveFailed
     }
 
     // MARK: - User Stats Management

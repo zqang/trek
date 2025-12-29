@@ -33,7 +33,8 @@ struct MainTabView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
-        TabView {
+        ZStack(alignment: .top) {
+            TabView {
             if let userId = authViewModel.currentUser?.id {
                 ActivitiesListView(userId: userId)
                     .tabItem {
@@ -62,6 +63,10 @@ struct MainTabView: View {
                         Label("Profile", systemImage: "person.circle")
                     }
             }
+            }
+
+            // Network Status Banner
+            NetworkStatusBanner()
         }
     }
 }
