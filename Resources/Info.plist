@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Location Permission Descriptions -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Trek needs access to your location to track your activities and record your route.</string>
+	
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Trek needs access to your location in the background to continue tracking your activity even when the app is not in the foreground.</string>
+	
+	<!-- Background Modes for Location Tracking -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+</dict>
+</plist>
