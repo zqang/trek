@@ -30,12 +30,21 @@ struct ContentView: View {
 
 // MARK: - Main Tab View
 struct MainTabView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     var body: some View {
         TabView {
-            ActivityListView()
-                .tabItem {
-                    Label("Activities", systemImage: "list.bullet")
-                }
+            if let userId = authViewModel.currentUser?.id {
+                ActivitiesListView(userId: userId)
+                    .tabItem {
+                        Label("Activities", systemImage: "list.bullet")
+                    }
+            } else {
+                Text("Loading...")
+                    .tabItem {
+                        Label("Activities", systemImage: "list.bullet")
+                    }
+            }
 
             RecordingView()
                 .tabItem {
