@@ -9,10 +9,17 @@ import SwiftUI
 import CoreLocation
 
 struct RecordingView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject private var locationService = LocationService()
+    @StateObject private var viewModel: RecordingViewModel
     @State private var showingLocationPermission = false
     @State private var showingActivityTypeSelector = false
-    @State private var selectedActivityType: ActivityType = .run
+
+    init() {
+        let locationService = LocationService()
+        _locationService = StateObject(wrappedValue: locationService)
+        _viewModel = StateObject(wrappedValue: RecordingViewModel(locationService: locationService))
+    }
 
     var body: some View {
         NavigationView {
@@ -46,6 +53,26 @@ struct RecordingView: View {
             }
             .sheet(isPresented: $showingLocationPermission) {
                 LocationPermissionView(locationService: locationService)
+            }
+            .sheet(isPresented: $viewModel.showActivitySummary) {
+                if let stats = viewModel.completedStats {
+                    ActivitySummaryView(
+                        stats: stats,
+                        route: viewModel.completedRoute,
+                        activityType: viewModel.selectedActivityType
+                    )
+                    .environmentObject(authViewModel)
+                }
+            }
+            .alert("Recover Activity?", isPresented: $viewModel.showRecoveryAlert) {
+                Button("Resume") {
+                    viewModel.recoverRecording()
+                }
+                Button("Discard", role: .destructive) {
+                    viewModel.discardRecovery()
+                }
+            } message: {
+                Text("You have an incomplete activity. Would you like to resume or discard it?")
             }
         }
     }
@@ -135,8 +162,8 @@ struct RecordingView: View {
                 ForEach(ActivityType.allCases, id: \.self) { type in
                     ActivityTypeButton(
                         type: type,
-                        isSelected: selectedActivityType == type,
-                        action: { selectedActivityType = type }
+                        isSelected: viewModel.selectedActivityType == type,
+                        action: { viewModel.selectedActivityType = type }
                     )
                 }
             }
@@ -161,11 +188,11 @@ struct RecordingView: View {
                 )
 
                 StatItem(
-                    label: selectedActivityType == .ride ? "Speed" : "Pace",
-                    value: selectedActivityType == .ride ?
+                    label: viewModel.selectedActivityType == .ride ? "Speed" : "Pace",
+                    value: viewModel.selectedActivityType == .ride ?
                         String(format: "%.1f", locationService.currentSpeed * 3.6) :
                         Formatters.formatPace(locationService.currentPace, unit: .metric),
-                    unit: selectedActivityType == .ride ? "km/h" : ""
+                    unit: viewModel.selectedActivityType == .ride ? "km/h" : ""
                 )
 
                 StatItem(
@@ -262,12 +289,11 @@ struct RecordingView: View {
 
     private func mainControlAction() {
         if !locationService.isTracking {
-            locationService.startTracking()
+            viewModel.startRecording()
         } else if locationService.isPaused {
             locationService.resumeTracking()
         } else {
-            _ = locationService.stopTracking()
-            // TODO: Show activity summary and save
+            viewModel.stopRecording()
         }
     }
 }
