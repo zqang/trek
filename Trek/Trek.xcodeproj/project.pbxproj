@@ -139,6 +139,7 @@
 		A100000E101A0004 /* KalmanFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KalmanFilterTests.swift; sourceTree = "<group>"; };
 		A100000E101A0005 /* FormattersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattersTests.swift; sourceTree = "<group>"; };
 		A100000E101A0006 /* OfflineQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineQueueTests.swift; sourceTree = "<group>"; };
+		A100000E101A0007 /* Trek.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Trek.entitlements; sourceTree = "<group>"; };
 		A1FFFFFF401A0001 /* Trek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1FFFFFF401A0002 /* TrekTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -181,6 +182,7 @@
 				A1FFFFFF601A0008 /* Services */,
 				A1FFFFFF601A0009 /* Utilities */,
 				A1FFFFFF601A0010 /* Resources */,
+				A100000E101A0007 /* Trek.entitlements */,
 			);
 			path = Trek;
 			sourceTree = "<group>";
@@ -701,24 +703,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Trek/Trek.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G3Z9NCB98X;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Trek/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Trek;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Trek needs access to your camera to take photos during your activities.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Trek needs location access to track your activities even when the app is in the background.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Trek needs your location to track your running and cycling activities with accurate distance and route information.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Trek needs access to your photo library to set your profile picture.";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Trek uses tracking data to provide analytics and improve your experience.";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -737,24 +731,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Trek/Trek.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G3Z9NCB98X;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Trek/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Trek;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Trek needs access to your camera to take photos during your activities.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Trek needs location access to track your activities even when the app is in the background.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Trek needs your location to track your running and cycling activities with accurate distance and route information.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Trek needs access to your photo library to set your profile picture.";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Trek uses tracking data to provide analytics and improve your experience.";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
