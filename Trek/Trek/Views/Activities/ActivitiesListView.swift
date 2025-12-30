@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import os.log
+
+private let logger = Logger(subsystem: "com.trek", category: "ActivitiesListView")
 
 struct ActivitiesListView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -253,7 +256,7 @@ struct ActivitiesListView: View {
                 rootViewController.present(activityVC, animated: true)
             }
         } catch {
-            print("Error sharing activity: \(error)")
+            logger.error("Error sharing activity: \(error.localizedDescription)")
         }
     }
 }

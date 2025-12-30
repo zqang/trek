@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import FirebaseFirestore
+import CoreLocation
 
 struct Activity: Codable, Identifiable {
-    @DocumentID var id: String?
+    var id: String?
     let userId: String
     var name: String
     var type: ActivityType
@@ -59,6 +59,60 @@ struct Activity: Codable, Identifiable {
         // Default name: "Morning Run"
         let timeOfDay = startTime.timeOfDay
         return "\(timeOfDay) \(type.displayName)"
+    }
+
+    // Initialize from Core Data entity
+    init(entity: ActivityEntity) {
+        self.id = entity.id?.uuidString
+        self.userId = entity.userId?.uuidString ?? ""
+        self.name = entity.name ?? ""
+        self.type = ActivityType(rawValue: entity.type ?? "run") ?? .run
+        self.startTime = entity.startTime ?? Date()
+        self.endTime = entity.endTime ?? Date()
+        self.distance = entity.distance
+        self.duration = entity.duration
+        self.elevationGain = entity.elevationGain
+
+        // Decode route from binary data
+        if let routeData = entity.routeData {
+            self.route = (try? JSONDecoder().decode([LocationPoint].self, from: routeData)) ?? []
+        } else {
+            self.route = []
+        }
+
+        self.splits = []  // Computed from route if needed
+        self.isPrivate = false
+        self.createdAt = entity.startTime ?? Date()
+    }
+
+    init(
+        id: String? = nil,
+        userId: String,
+        name: String = "",
+        type: ActivityType,
+        startTime: Date,
+        endTime: Date,
+        distance: Double,
+        duration: TimeInterval,
+        elevationGain: Double,
+        route: [LocationPoint],
+        splits: [Split] = [],
+        isPrivate: Bool = false,
+        createdAt: Date = Date()
+    ) {
+        self.id = id
+        self.userId = userId
+        self.name = name
+        self.type = type
+        self.startTime = startTime
+        self.endTime = endTime
+        self.distance = distance
+        self.duration = duration
+        self.elevationGain = elevationGain
+        self.route = route
+        self.splits = splits
+        self.isPrivate = isPrivate
+        self.createdAt = createdAt
     }
 }
 
@@ -113,5 +167,3 @@ extension Date {
         }
     }
 }
-
-import CoreLocation

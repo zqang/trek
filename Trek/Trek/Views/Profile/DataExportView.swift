@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
 
 struct DataExportView: View {
     @Environment(\.dismiss) var dismiss
@@ -113,24 +112,10 @@ struct DataExportView: View {
         Task {
             do {
                 // Fetch all activities
-                var allActivities: [Activity] = []
-                var lastDoc: DocumentSnapshot?
-                var hasMore = true
+                let allActivities = try await activityService.fetchAllActivities(userId: userId)
 
-                while hasMore {
-                    let (activities, lastDocument) = try await activityService.fetchActivities(
-                        userId: userId,
-                        limit: 50,
-                        lastDocument: lastDoc
-                    )
-
-                    allActivities.append(contentsOf: activities)
-                    lastDoc = lastDocument
-                    hasMore = activities.count == 50
-
-                    exportProgress = 0.3
-                    exportStatus = "Fetched \(allActivities.count) activities..."
-                }
+                exportProgress = 0.3
+                exportStatus = "Fetched \(allActivities.count) activities..."
 
                 guard !allActivities.isEmpty else {
                     errorMessage = "No activities to export"

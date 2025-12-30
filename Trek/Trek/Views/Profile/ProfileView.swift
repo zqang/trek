@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import os.log
+
+private let logger = Logger(subsystem: "com.trek", category: "ProfileView")
 
 struct ProfileView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -60,7 +63,7 @@ struct ProfileView: View {
                     do {
                         try viewModel.signOut()
                     } catch {
-                        print("Sign out error: \(error)")
+                        logger.error("Sign out error: \(error.localizedDescription)")
                     }
                 }
             } message: {

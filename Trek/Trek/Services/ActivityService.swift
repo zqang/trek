@@ -2,145 +2,159 @@
 //  ActivityService.swift
 //  Trek
 //
-//  Created on December 29, 2025.
+//  Local activity service using JSON-based storage.
 //
 
 import Foundation
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 @MainActor
 class ActivityService {
-    private let db = Firestore.firestore()
-    private let networkMonitor = NetworkMonitor.shared
-    private let offlineQueue = OfflineQueue.shared
-    private let maxRetries = 3
+    private let coreData = CoreDataStack.shared
 
     // MARK: - Create Activity
     func saveActivity(_ activity: Activity) async throws -> String {
-        // If offline, queue the operation
-        if !networkMonitor.isConnected {
-            offlineQueue.queueActivity(activity, operation: .saveActivity)
-            // Return a temporary ID
-            return "pending_\(UUID().uuidString)"
+        let context = coreData.viewContext
+
+        let entity = ActivityEntity()
+        let activityId = UUID()
+        entity.id = activityId
+        entity.userId = UUID(uuidString: activity.userId)
+        entity.name = activity.name
+        entity.type = activity.type.rawValue
+        entity.startTime = activity.startTime
+        entity.endTime = activity.endTime
+        entity.distance = activity.distance
+        entity.duration = activity.duration
+        entity.elevationGain = activity.elevationGain
+        entity.calories = 0
+        entity.activityDescription = nil
+
+        // Encode route as binary data
+        if !activity.route.isEmpty {
+            entity.routeData = try? JSONEncoder().encode(activity.route)
         }
 
-        // Try to save with retry logic
-        return try await withRetry {
-            let docRef = try await db.collection("activities").addDocument(from: activity)
+        context.addActivity(entity)
+        try context.save()
 
-            // Update user stats
-            try await self.updateUserStats(userId: activity.userId, activity: activity)
+        // Update user stats
+        try await updateUserStats(userId: activity.userId, activity: activity)
 
-            return docRef.documentID
-        }
+        return activityId.uuidString
     }
 
     // MARK: - Read Activities
-    func fetchActivities(userId: String, limit: Int = 20) async throws -> [Activity] {
-        let snapshot = try await db.collection("activities")
-            .whereField("userId", isEqualTo: userId)
-            .order(by: "startTime", descending: true)
-            .limit(to: limit)
-            .getDocuments()
+    func fetchActivities(userId: String, limit: Int = 20, offset: Int = 0) async throws -> [Activity] {
+        guard let uuid = UUID(uuidString: userId) else { return [] }
 
-        return try snapshot.documents.compactMap { doc in
-            try doc.data(as: Activity.self)
-        }
+        let context = coreData.viewContext
+        let request = ActivityEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "userId == %@", uuid as CVarArg)
+        request.localSortDescriptors = [LocalSortDescriptor(key: "startTime", ascending: false)]
+        request.fetchLimit = limit
+        request.fetchOffset = offset
+
+        let entities = try context.fetch(request)
+        return entities.map { Activity(entity: $0) }
     }
 
     func fetchActivity(id: String) async throws -> Activity {
-        let document = try await db.collection("activities").document(id).getDocument()
-        return try document.data(as: Activity.self)
+        guard let uuid = UUID(uuidString: id) else {
+            throw ActivityServiceError.fetchFailed
+        }
+
+        let context = coreData.viewContext
+        let request = ActivityEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
+        request.fetchLimit = 1
+
+        guard let entity = try context.fetch(request).first else {
+            throw ActivityServiceError.fetchFailed
+        }
+
+        return Activity(entity: entity)
     }
 
     // MARK: - Update Activity
     func updateActivity(_ activity: Activity) async throws {
-        guard let activityId = activity.id else {
+        guard let activityId = activity.id,
+              let uuid = UUID(uuidString: activityId) else {
             throw ActivityServiceError.missingActivityId
         }
 
-        // If offline, queue the operation
-        if !networkMonitor.isConnected {
-            offlineQueue.queueActivityUpdate(activity)
-            return
+        let context = coreData.viewContext
+        let request = ActivityEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
+
+        guard let entity = try context.fetch(request).first else {
+            throw ActivityServiceError.fetchFailed
         }
 
-        // Try to update with retry logic
-        try await withRetry {
-            try await db.collection("activities")
-                .document(activityId)
-                .setData(from: activity, merge: true)
-        }
+        entity.name = activity.name
+        entity.type = activity.type.rawValue
+        entity.activityDescription = nil
+
+        context.updateActivity(entity)
+        try context.save()
     }
 
     // MARK: - Delete Activity
     func deleteActivity(id: String, userId: String) async throws {
-        // If offline, queue the operation
-        if !networkMonitor.isConnected {
-            offlineQueue.queueActivityDelete(activityId: id, userId: userId)
-            return
+        guard let uuid = UUID(uuidString: id) else {
+            throw ActivityServiceError.deleteFailed
         }
 
-        // Try to delete with retry logic
-        try await withRetry {
-            // Fetch activity first to get stats for user update
-            let activity = try await self.fetchActivity(id: id)
+        let context = coreData.viewContext
+        let request = ActivityEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
 
-            // Delete the activity
-            try await db.collection("activities").document(id).delete()
-
-            // Update user stats (subtract this activity's stats)
-            try await self.decrementUserStats(userId: userId, activity: activity)
-        }
-    }
-
-    // MARK: - Retry Logic
-    private func withRetry<T>(maxAttempts: Int = 3, operation: @escaping () async throws -> T) async throws -> T {
-        var lastError: Error?
-
-        for attempt in 1...maxAttempts {
-            do {
-                return try await operation()
-            } catch {
-                lastError = error
-                print("Attempt \(attempt) failed: \(error.localizedDescription)")
-
-                // Don't retry if offline
-                if !networkMonitor.isConnected {
-                    throw error
-                }
-
-                // Wait before retrying (exponential backoff)
-                if attempt < maxAttempts {
-                    let delay = Double(attempt) * 1.0
-                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-                }
-            }
+        guard let entity = try context.fetch(request).first else {
+            throw ActivityServiceError.fetchFailed
         }
 
-        throw lastError ?? ActivityServiceError.saveFailed
+        // Get activity data before deleting for stats update
+        let activity = Activity(entity: entity)
+
+        context.deleteActivity(entity)
+        try context.save()
+
+        // Update user stats
+        try await decrementUserStats(userId: userId, activity: activity)
     }
 
     // MARK: - User Stats Management
     private func updateUserStats(userId: String, activity: Activity) async throws {
-        let userRef = db.collection("users").document(userId)
+        guard let uuid = UUID(uuidString: userId) else { return }
 
-        try await userRef.updateData([
-            "totalDistance": FieldValue.increment(activity.distance),
-            "totalActivities": FieldValue.increment(Int64(1)),
-            "totalDuration": FieldValue.increment(activity.duration)
-        ])
+        let context = coreData.viewContext
+        let request = UserEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
+
+        guard let userEntity = try context.fetch(request).first else { return }
+
+        userEntity.totalDistance += activity.distance
+        userEntity.totalActivities += 1
+        userEntity.totalDuration += activity.duration
+
+        context.updateUser(userEntity)
+        try context.save()
     }
 
     private func decrementUserStats(userId: String, activity: Activity) async throws {
-        let userRef = db.collection("users").document(userId)
+        guard let uuid = UUID(uuidString: userId) else { return }
 
-        try await userRef.updateData([
-            "totalDistance": FieldValue.increment(-activity.distance),
-            "totalActivities": FieldValue.increment(Int64(-1)),
-            "totalDuration": FieldValue.increment(-activity.duration)
-        ])
+        let context = coreData.viewContext
+        let request = UserEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
+
+        guard let userEntity = try context.fetch(request).first else { return }
+
+        userEntity.totalDistance = max(0, userEntity.totalDistance - activity.distance)
+        userEntity.totalActivities = max(0, userEntity.totalActivities - 1)
+        userEntity.totalDuration = max(0, userEntity.totalDuration - activity.duration)
+
+        context.updateUser(userEntity)
+        try context.save()
     }
 
     // MARK: - Export Activity as GPX
@@ -181,15 +195,20 @@ class ActivityService {
 
     // MARK: - Statistics
     func fetchUserStats(userId: String, startDate: Date, endDate: Date) async throws -> UserStats {
-        let snapshot = try await db.collection("activities")
-            .whereField("userId", isEqualTo: userId)
-            .whereField("startTime", isGreaterThanOrEqualTo: startDate)
-            .whereField("startTime", isLessThanOrEqualTo: endDate)
-            .getDocuments()
-
-        let activities = try snapshot.documents.compactMap { doc in
-            try doc.data(as: Activity.self)
+        guard let uuid = UUID(uuidString: userId) else {
+            return UserStats(totalActivities: 0, totalDistance: 0, totalDuration: 0, totalElevation: 0, activities: [])
         }
+
+        let context = coreData.viewContext
+        let request = ActivityEntity.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "userId == %@ AND startTime >= %@ AND startTime <= %@",
+            uuid as CVarArg, startDate as CVarArg, endDate as CVarArg
+        )
+        request.localSortDescriptors = [LocalSortDescriptor(key: "startTime", ascending: false)]
+
+        let entities = try context.fetch(request)
+        let activities = entities.map { Activity(entity: $0) }
 
         let totalDistance = activities.reduce(0) { $0 + $1.distance }
         let totalDuration = activities.reduce(0) { $0 + $1.duration }
@@ -202,6 +221,19 @@ class ActivityService {
             totalElevation: totalElevation,
             activities: activities
         )
+    }
+
+    // MARK: - Fetch All Activities for Export
+    func fetchAllActivities(userId: String) async throws -> [Activity] {
+        guard let uuid = UUID(uuidString: userId) else { return [] }
+
+        let context = coreData.viewContext
+        let request = ActivityEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "userId == %@", uuid as CVarArg)
+        request.localSortDescriptors = [LocalSortDescriptor(key: "startTime", ascending: false)]
+
+        let entities = try context.fetch(request)
+        return entities.map { Activity(entity: $0) }
     }
 }
 

@@ -20,10 +20,16 @@ class RecordingViewModel: ObservableObject {
     private var autoSaveTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
 
-    let locationService: LocationService
+    // LocationService owned by the ViewModel - single source of truth
+    let locationService = LocationService()
 
-    init(locationService: LocationService) {
-        self.locationService = locationService
+    init() {
+        // Forward locationService changes to trigger view updates
+        locationService.objectWillChange
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
 
         // Check for pending recording on init
         checkForPendingRecording()
@@ -107,6 +113,7 @@ class RecordingViewModel: ObservableObject {
 
     // MARK: - Cleanup
     deinit {
-        stopAutoSave()
+        autoSaveTimer?.invalidate()
+        autoSaveTimer = nil
     }
 }

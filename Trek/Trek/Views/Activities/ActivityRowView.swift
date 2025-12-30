@@ -119,18 +119,6 @@ struct StatColumn: View {
     }
 }
 
-// MARK: - Activity Extensions
-extension Activity {
-    var averageSpeed: Double {
-        guard duration > 0 else { return 0 }
-        return distance / duration
-    }
-
-    var averagePace: Double {
-        guard distance > 0 else { return 0 }
-        return duration / (distance / 1000)
-    }
-}
 
 #Preview {
     ScrollView {

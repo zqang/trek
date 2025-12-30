@@ -24,14 +24,12 @@ struct RouteMapView: View {
 
     var body: some View {
         Map(coordinateRegion: $region, annotationItems: annotations) { annotation in
-            if annotation.type == .start {
-                MapAnnotation(coordinate: annotation.coordinate) {
+            MapAnnotation(coordinate: annotation.coordinate) {
+                if annotation.type == .start {
                     Image(systemName: "flag.fill")
                         .foregroundColor(.green)
                         .font(.title2)
-                }
-            } else if annotation.type == .end {
-                MapAnnotation(coordinate: annotation.coordinate) {
+                } else {
                     Image(systemName: "flag.checkered")
                         .foregroundColor(.red)
                         .font(.title2)

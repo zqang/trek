@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import os.log
+
+private let logger = Logger(subsystem: "com.trek", category: "CrashRecoveryService")
 
 class CrashRecoveryService {
     private let userDefaults = UserDefaults.standard
@@ -20,7 +23,7 @@ class CrashRecoveryService {
             userDefaults.set(data, forKey: recordingStateKey)
             userDefaults.synchronize()
         } catch {
-            print("Failed to save recording state: \(error.localizedDescription)")
+            logger.error("Failed to save recording state: \(error.localizedDescription)")
         }
     }
 
@@ -36,7 +39,7 @@ class CrashRecoveryService {
             let state = try decoder.decode(RecordingState.self, from: data)
             return state
         } catch {
-            print("Failed to load recording state: \(error.localizedDescription)")
+            logger.error("Failed to load recording state: \(error.localizedDescription)")
             return nil
         }
     }

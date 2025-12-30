@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 @MainActor
 class AuthViewModel: ObservableObject {
@@ -37,6 +38,7 @@ class AuthViewModel: ObservableObject {
 
         do {
             try await authService.signUp(email: email, password: password, name: name)
+            isNewUser = true
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -68,37 +70,32 @@ class AuthViewModel: ObservableObject {
     }
 
     // MARK: - Password Reset
+    // Note: For local-only apps, password reset requires direct access to the app
+    // This method shows an informational message
     func resetPassword(email: String) async {
         isLoading = true
         errorMessage = nil
 
-        do {
-            try await authService.resetPassword(email: email)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        // For local auth, we can only show a message since there's no email verification
+        errorMessage = "Password reset is not available for local accounts. Please contact support if you've forgotten your password."
 
         isLoading = false
     }
 
-    // MARK: - Apple Sign In
-    func signInWithApple() async {
+    // MARK: - Update Password (for authenticated users)
+    func updatePassword(currentPassword: String, newPassword: String) async -> Bool {
         isLoading = true
         errorMessage = nil
 
         do {
-            let result = try await authService.signInWithApple()
-            isNewUser = result.isNewUser
-
-            if result.isNewUser {
-                // Show profile setup for new users
-                showProfileSetup = true
-            }
+            try await authService.updatePassword(currentPassword: currentPassword, newPassword: newPassword)
+            isLoading = false
+            return true
         } catch {
             errorMessage = error.localizedDescription
+            isLoading = false
+            return false
         }
-
-        isLoading = false
     }
 
     // MARK: - Update Profile Photo
@@ -109,8 +106,8 @@ class AuthViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            let photoURL = try await storageService.uploadProfilePhoto(userId: userId, image: image)
-            try await authService.updateUserProfile(name: nil, profilePhotoURL: photoURL)
+            let photoPath = try await storageService.uploadProfilePhoto(userId: userId, image: image)
+            try await authService.updateUserProfile(name: nil, profilePhotoURL: photoPath)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -124,12 +121,12 @@ class AuthViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            var photoURL: String?
+            var photoPath: String?
             if let photo = photo, let userId = currentUser?.id {
-                photoURL = try await storageService.uploadProfilePhoto(userId: userId, image: photo)
+                photoPath = try await storageService.uploadProfilePhoto(userId: userId, image: photo)
             }
 
-            try await authService.updateUserProfile(name: name, profilePhotoURL: photoURL)
+            try await authService.updateUserProfile(name: name, profilePhotoURL: photoPath)
             showProfileSetup = false
         } catch {
             errorMessage = error.localizedDescription

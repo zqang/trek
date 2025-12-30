@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import FirebaseFirestore
 
 @MainActor
 class ActivitiesViewModel: ObservableObject {
@@ -24,7 +23,7 @@ class ActivitiesViewModel: ObservableObject {
     @Published var searchText = ""
 
     private let activityService = ActivityService()
-    private var lastDocument: DocumentSnapshot?
+    private var currentOffset = 0
     private let pageSize = 20
     private var cancellables = Set<AnyCancellable>()
 
@@ -59,14 +58,14 @@ class ActivitiesViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            let (fetchedActivities, lastDoc) = try await activityService.fetchActivities(
+            let fetchedActivities = try await activityService.fetchActivities(
                 userId: userId,
                 limit: pageSize,
-                lastDocument: nil
+                offset: 0
             )
 
             activities = applyFiltersAndSorting(to: fetchedActivities)
-            lastDocument = lastDoc
+            currentOffset = fetchedActivities.count
             hasMoreActivities = fetchedActivities.count == pageSize
             isLoading = false
         } catch {
@@ -84,15 +83,15 @@ class ActivitiesViewModel: ObservableObject {
         isLoadingMore = true
 
         do {
-            let (fetchedActivities, lastDoc) = try await activityService.fetchActivities(
+            let fetchedActivities = try await activityService.fetchActivities(
                 userId: userId,
                 limit: pageSize,
-                lastDocument: lastDocument
+                offset: currentOffset
             )
 
             let filteredActivities = applyFiltersAndSorting(to: fetchedActivities)
             activities.append(contentsOf: filteredActivities)
-            lastDocument = lastDoc
+            currentOffset += fetchedActivities.count
             hasMoreActivities = fetchedActivities.count == pageSize
             isLoadingMore = false
         } catch {
@@ -105,7 +104,7 @@ class ActivitiesViewModel: ObservableObject {
     // MARK: - Refresh
 
     func refreshActivities() async {
-        lastDocument = nil
+        currentOffset = 0
         hasMoreActivities = true
         await fetchActivities()
     }

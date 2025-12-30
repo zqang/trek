@@ -74,9 +74,9 @@ struct PermissionsPageView: View {
                 )
 
                 PermissionRow(
-                    icon: "icloud.fill",
-                    title: "Sync Everywhere",
-                    description: "Your activities are backed up and synced across devices"
+                    icon: "iphone",
+                    title: "Local Storage",
+                    description: "Your data stays on your device. Private and secure."
                 )
             }
 
@@ -129,29 +129,6 @@ struct AuthSelectionView: View {
             Spacer()
 
             VStack(spacing: 15) {
-                // Apple Sign In Button
-                AppleSignInButton {
-                    Task {
-                        await authViewModel.signInWithApple()
-                    }
-                }
-
-                // Divider
-                HStack {
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.gray.opacity(0.3))
-
-                    Text("or")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.gray.opacity(0.3))
-                }
-                .padding(.vertical, 5)
-
                 Button(action: { showingSignUp = true }) {
                     Text("Create Account")
                         .font(.headline)

@@ -15,7 +15,11 @@ struct ActivityListView: View {
         NavigationView {
             Group {
                 if activities.isEmpty {
-                    EmptyActivitiesView()
+                    EmptyActivitiesView(
+                        hasFilters: false,
+                        onStartRecording: {},
+                        onClearFilters: {}
+                    )
                 } else {
                     List(activities) { activity in
                         Text(activity.displayName)
@@ -30,27 +34,6 @@ struct ActivityListView: View {
                     }
                 }
             }
-        }
-    }
-}
-
-// MARK: - Empty State
-struct EmptyActivitiesView: View {
-    var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "figure.run.circle")
-                .font(.system(size: 80))
-                .foregroundColor(.gray)
-
-            Text("No Activities Yet")
-                .font(.title2)
-                .fontWeight(.semibold)
-
-            Text("Tap the + button below to record your first activity")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
         }
     }
 }

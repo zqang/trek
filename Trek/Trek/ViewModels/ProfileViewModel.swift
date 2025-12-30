@@ -7,8 +7,9 @@
 
 import Foundation
 import SwiftUI
-import FirebaseFirestore
-import FirebaseAuth
+import os.log
+
+private let logger = Logger(subsystem: "com.trek", category: "ProfileViewModel")
 
 @MainActor
 class ProfileViewModel: ObservableObject {
@@ -32,7 +33,8 @@ class ProfileViewModel: ObservableObject {
 
     private let authService = AuthService()
     private let storageService = StorageService()
-    private let db = Firestore.firestore()
+    private let activityService = ActivityService()
+    private let coreData = CoreDataStack.shared
 
     let userId: String
 
@@ -45,10 +47,20 @@ class ProfileViewModel: ObservableObject {
     func fetchUserProfile() async {
         isLoading = true
 
-        do {
-            let document = try await db.collection("users").document(userId).getDocument()
+        guard let uuid = UUID(uuidString: userId) else {
+            errorMessage = "Invalid user ID"
+            showingError = true
+            isLoading = false
+            return
+        }
 
-            if let user = try? document.data(as: User.self) {
+        do {
+            let context = coreData.viewContext
+            let request = UserEntity.fetchRequest()
+            request.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
+
+            if let userEntity = try context.fetch(request).first {
+                let user = User(entity: userEntity)
                 self.user = user
                 self.editedDisplayName = user.displayName ?? ""
                 self.editedBio = user.bio ?? ""
@@ -71,55 +83,73 @@ class ProfileViewModel: ObservableObject {
     // MARK: - Fetch User Stats
 
     private func fetchUserStats() async {
-        do {
-            let snapshot = try await db.collection("activities")
-                .whereField("userId", isEqualTo: userId)
-                .getDocuments()
+        guard let uuid = UUID(uuidString: userId) else { return }
 
-            totalActivities = snapshot.documents.count
+        do {
+            let context = coreData.viewContext
+            let request = ActivityEntity.fetchRequest()
+            request.predicate = NSPredicate(format: "userId == %@", uuid as CVarArg)
+
+            let entities = try context.fetch(request)
+
+            totalActivities = entities.count
             totalDistance = 0
             totalDuration = 0
             totalElevationGain = 0
             activitiesByType = [:]
 
-            for document in snapshot.documents {
-                if let activity = try? document.data(as: Activity.self) {
-                    totalDistance += activity.distance
-                    totalDuration += activity.duration
-                    totalElevationGain += activity.elevationGain
+            for entity in entities {
+                totalDistance += entity.distance
+                totalDuration += entity.duration
+                totalElevationGain += entity.elevationGain
 
-                    // Count by type
-                    activitiesByType[activity.type, default: 0] += 1
+                // Count by type
+                if let typeString = entity.type,
+                   let activityType = ActivityType(rawValue: typeString) {
+                    activitiesByType[activityType, default: 0] += 1
                 }
             }
         } catch {
-            print("Error fetching user stats: \(error)")
+            logger.error("Error fetching user stats: \(error.localizedDescription)")
         }
     }
 
     // MARK: - Update Profile
 
     func updateProfile() async -> Bool {
-        guard var updatedUser = user else { return false }
+        guard var updatedUser = user,
+              let uuid = UUID(uuidString: userId) else { return false }
 
         isSaving = true
 
         do {
             // Upload profile photo if selected
             if let profileImage = selectedProfileImage {
-                let photoURL = try await storageService.uploadProfilePhoto(
+                let photoPath = try await storageService.uploadProfilePhoto(
                     userId: userId,
                     image: profileImage
                 )
-                updatedUser.photoURL = photoURL
+                updatedUser.photoURL = photoPath
+                updatedUser.profilePhotoURL = photoPath
             }
 
             // Update user fields
             updatedUser.displayName = editedDisplayName.trimmingCharacters(in: .whitespaces)
             updatedUser.bio = editedBio.trimmingCharacters(in: .whitespaces)
 
-            // Save to Firestore
-            try db.collection("users").document(userId).setData(from: updatedUser, merge: true)
+            // Save to Core Data
+            let context = coreData.viewContext
+            let request = UserEntity.fetchRequest()
+            request.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
+
+            if let userEntity = try context.fetch(request).first {
+                userEntity.name = updatedUser.name
+                userEntity.bio = updatedUser.bio
+                userEntity.profilePhotoPath = updatedUser.profilePhotoURL
+
+                context.updateUser(userEntity)
+                try context.save()
+            }
 
             // Update local copy
             self.user = updatedUser
@@ -143,26 +173,33 @@ class ProfileViewModel: ObservableObject {
     // MARK: - Delete Account
 
     func deleteAccount() async -> Bool {
+        guard let uuid = UUID(uuidString: userId) else { return false }
+
         do {
+            let context = coreData.viewContext
+
             // Delete all user activities
-            let activitiesSnapshot = try await db.collection("activities")
-                .whereField("userId", isEqualTo: userId)
-                .getDocuments()
-
-            // Batch delete activities
-            let batch = db.batch()
-            for document in activitiesSnapshot.documents {
-                batch.deleteDocument(document.reference)
+            let activitiesRequest = ActivityEntity.fetchRequest()
+            activitiesRequest.predicate = NSPredicate(format: "userId == %@", uuid as CVarArg)
+            let activities = try context.fetch(activitiesRequest)
+            for activity in activities {
+                context.deleteActivity(activity)
             }
-            try await batch.commit()
 
-            // Delete user document
-            try await db.collection("users").document(userId).delete()
-
-            // Delete Firebase Auth account
-            if let currentUser = Auth.auth().currentUser {
-                try await currentUser.delete()
+            // Delete user
+            let userRequest = UserEntity.fetchRequest()
+            userRequest.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
+            if let userEntity = try context.fetch(userRequest).first {
+                context.deleteUser(userEntity)
             }
+
+            try context.save()
+
+            // Delete stored files
+            try await storageService.deleteAllUserData(userId: userId)
+
+            // Clear session
+            try authService.signOut()
 
             return true
         } catch {

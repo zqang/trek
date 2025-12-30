@@ -8,6 +8,9 @@
 import Foundation
 import CoreLocation
 import Combine
+import os.log
+
+private let logger = Logger(subsystem: "com.trek", category: "LocationService")
 
 class LocationService: NSObject, ObservableObject {
     // MARK: - Published Properties
@@ -244,7 +247,7 @@ extension LocationService: CLLocationManagerDelegate {
         } else {
             locationError = .unknown(error.localizedDescription)
         }
-        print("Location manager failed with error: \(error.localizedDescription)")
+        logger.error("Location manager failed: \(error.localizedDescription)")
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

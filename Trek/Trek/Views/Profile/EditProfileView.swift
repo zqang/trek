@@ -125,9 +125,15 @@ struct EditProfileView: View {
         vm.user = User(
             id: "test",
             email: "test@example.com",
+            name: "John Doe",
             displayName: "John Doe",
-            photoURL: nil,
             bio: "Love running!",
+            profilePhotoURL: nil,
+            photoURL: nil,
+            totalDistance: 0,
+            totalActivities: 0,
+            totalDuration: 0,
+            preferredUnits: .metric,
             createdAt: Date()
         )
         vm.editedDisplayName = "John Doe"

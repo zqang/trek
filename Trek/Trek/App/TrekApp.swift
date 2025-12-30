@@ -6,19 +6,13 @@
 //
 
 import SwiftUI
-import FirebaseCore
 
 @main
 struct TrekApp: App {
 
     init() {
-        // Configure Firebase
-        FirebaseApp.configure()
-
-        // Enable Firestore offline persistence
-        let settings = FirestoreSettings()
-        settings.isPersistenceEnabled = true
-        Firestore.firestore().settings = settings
+        // Initialize Core Data stack
+        _ = CoreDataStack.shared
     }
 
     var body: some Scene {

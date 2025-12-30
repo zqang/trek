@@ -28,15 +28,12 @@ enum Constants {
 }
 
 // MARK: - Color Palette
-extension Color {
-    // MARK: - Primary Colors
-    static let trekPrimary = Color("TrekPrimary")
-    static let trekSecondary = Color("TrekSecondary")
-    static let trekAccent = Color.accentColor
+// Note: trekPrimary, trekSecondary, trekBackground, trekSecondaryBackground
+// are auto-generated from Colors.xcassets by Xcode
 
-    // MARK: - Background Colors
-    static let trekBackground = Color("TrekBackground")
-    static let trekSecondaryBackground = Color("TrekSecondaryBackground")
+extension Color {
+    // MARK: - Accent Color
+    static let trekAccent = Color.accentColor
 
     // MARK: - Text Colors
     static let trekPrimaryText = Color.primary

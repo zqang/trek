@@ -10,22 +10,20 @@ import CoreLocation
 
 struct RecordingView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @StateObject private var locationService = LocationService()
-    @StateObject private var viewModel: RecordingViewModel
+    @StateObject private var viewModel = RecordingViewModel()
     @State private var showingLocationPermission = false
     @State private var showingActivityTypeSelector = false
 
-    init() {
-        let locationService = LocationService()
-        _locationService = StateObject(wrappedValue: locationService)
-        _viewModel = StateObject(wrappedValue: RecordingViewModel(locationService: locationService))
+    // Access locationService through viewModel for consistency
+    private var locationService: LocationService {
+        viewModel.locationService
     }
 
     var body: some View {
         NavigationView {
             ZStack {
-                if locationService.authorizationStatus == .authorizedWhenInUse ||
-                   locationService.authorizationStatus == .authorizedAlways {
+                if viewModel.locationService.authorizationStatus == .authorizedWhenInUse ||
+                   viewModel.locationService.authorizationStatus == .authorizedAlways {
                     // Recording interface
                     recordingInterface
                 } else {
@@ -73,6 +71,9 @@ struct RecordingView: View {
                 }
             } message: {
                 Text("You have an incomplete activity. Would you like to resume or discard it?")
+            }
+            .onReceive(viewModel.locationService.objectWillChange) { _ in
+                // Force view update when locationService changes
             }
         }
     }
@@ -351,4 +352,5 @@ struct StatItem: View {
 
 #Preview {
     RecordingView()
+        .environmentObject(AuthViewModel())
 }

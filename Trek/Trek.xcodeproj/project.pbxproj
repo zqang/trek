@@ -1,0 +1,842 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1000001201A0001 /* TrekApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001101A0001 /* TrekApp.swift */; };
+		A1000001201A0002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001101A0002 /* ContentView.swift */; };
+		A1000002201A0001 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002101A0001 /* User.swift */; };
+		A1000002201A0002 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002101A0002 /* Activity.swift */; };
+		A1000002201A0003 /* ActivityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002101A0003 /* ActivityType.swift */; };
+		A1000003201A0001 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003101A0001 /* AuthViewModel.swift */; };
+		A1000003201A0002 /* ActivitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003101A0002 /* ActivitiesViewModel.swift */; };
+		A1000003201A0003 /* ActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003101A0003 /* ActivityDetailViewModel.swift */; };
+		A1000003201A0004 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003101A0004 /* ProfileViewModel.swift */; };
+		A1000003201A0005 /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003101A0005 /* RecordingViewModel.swift */; };
+		A1000003201A0006 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003101A0006 /* SettingsViewModel.swift */; };
+		A1000004201A0001 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A0001 /* AuthService.swift */; };
+		A1000004201A0002 /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A0002 /* ActivityService.swift */; };
+		A1000004201A0003 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A0003 /* LocationService.swift */; };
+		A1000004201A0004 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A0004 /* StorageService.swift */; };
+		A1000004201A0006 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A0006 /* SyncService.swift */; };
+		A1000004201A0007 /* CrashRecoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A0007 /* CrashRecoveryService.swift */; };
+		A1000004201A0008 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A0008 /* NetworkMonitor.swift */; };
+		A1000004201A0009 /* OfflineQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A0009 /* OfflineQueue.swift */; };
+		A1000004201A000A /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004101A000A /* CoreDataStack.swift */; };
+		A1000005201A0001 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005101A0001 /* Constants.swift */; };
+		A1000005201A0002 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005101A0002 /* Extensions.swift */; };
+		A1000005201A0003 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005101A0003 /* Formatters.swift */; };
+		A1000005201A0004 /* AnimationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005101A0004 /* AnimationConstants.swift */; };
+		A1000005201A0005 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005101A0005 /* HapticManager.swift */; };
+		A1000005201A0006 /* KalmanFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005101A0006 /* KalmanFilter.swift */; };
+		A1000005201A0007 /* UnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005101A0007 /* UnitConverter.swift */; };
+		A1000006201A0001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006101A0001 /* OnboardingView.swift */; };
+		A1000006201A0002 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006101A0002 /* LoginView.swift */; };
+		A1000006201A0003 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006101A0003 /* SignUpView.swift */; };
+		A1000006201A0004 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006101A0004 /* ProfileSetupView.swift */; };
+		A1000007201A0001 /* ActivitiesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007101A0001 /* ActivitiesListView.swift */; };
+		A1000007201A0002 /* ActivityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007101A0002 /* ActivityDetailView.swift */; };
+		A1000007201A0003 /* ActivityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007101A0003 /* ActivityListView.swift */; };
+		A1000007201A0004 /* ActivityRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007101A0004 /* ActivityRowView.swift */; };
+		A1000007201A0005 /* EmptyActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007101A0005 /* EmptyActivitiesView.swift */; };
+		A1000008201A0001 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008101A0001 /* RecordingView.swift */; };
+		A1000008201A0002 /* ActivitySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008101A0002 /* ActivitySummaryView.swift */; };
+		A1000009201A0001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000009101A0001 /* ProfileView.swift */; };
+		A1000009201A0002 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000009101A0002 /* EditProfileView.swift */; };
+		A1000009201A0003 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000009101A0003 /* SettingsView.swift */; };
+		A1000009201A0004 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000009101A0004 /* StatsView.swift */; };
+		A1000009201A0005 /* DataExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000009101A0005 /* DataExportView.swift */; };
+		A100000A201A0001 /* NetworkStatusBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A101A0001 /* NetworkStatusBanner.swift */; };
+		A100000A201A0002 /* GPSSignalIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A101A0002 /* GPSSignalIndicator.swift */; };
+		A100000A201A0003 /* LocationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A101A0003 /* LocationPermissionView.swift */; };
+		A100000A201A0004 /* RouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A101A0004 /* RouteMapView.swift */; };
+		A100000A201A0005 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A101A0005 /* SkeletonView.swift */; };
+		A100000A201A0006 /* SyncStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A101A0006 /* SyncStatusView.swift */; };
+		A100000B201A0001 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000B101A0001 /* LaunchScreenView.swift */; };
+		A100000C201A0001 /* GPSDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C101A0001 /* GPSDebugView.swift */; };
+		A100000D201A0001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A100000D101A0001 /* Assets.xcassets */; };
+		A100000D201A0002 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A100000D101A0002 /* Colors.xcassets */; };
+		A100000E201A0001 /* MockActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E101A0001 /* MockActivityService.swift */; };
+		A100000E201A0002 /* ActivitiesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E101A0002 /* ActivitiesViewModelTests.swift */; };
+		A100000E201A0003 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E101A0003 /* TestHelpers.swift */; };
+		A100000E201A0004 /* KalmanFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E101A0004 /* KalmanFilterTests.swift */; };
+		A100000E201A0005 /* FormattersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E101A0005 /* FormattersTests.swift */; };
+		A100000E201A0006 /* OfflineQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E101A0006 /* OfflineQueueTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A100000F001A0001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1FFFFFF101A0001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1FFFFFF301A0001;
+			remoteInfo = Trek;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A1000001101A0001 /* TrekApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekApp.swift; sourceTree = "<group>"; };
+		A1000001101A0002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A1000002101A0001 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A1000002101A0002 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		A1000002101A0003 /* ActivityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityType.swift; sourceTree = "<group>"; };
+		A1000003101A0001 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		A1000003101A0002 /* ActivitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesViewModel.swift; sourceTree = "<group>"; };
+		A1000003101A0003 /* ActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewModel.swift; sourceTree = "<group>"; };
+		A1000003101A0004 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		A1000003101A0005 /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
+		A1000003101A0006 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		A1000004101A0001 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		A1000004101A0002 /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
+		A1000004101A0003 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		A1000004101A0004 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		A1000004101A0006 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		A1000004101A0007 /* CrashRecoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashRecoveryService.swift; sourceTree = "<group>"; };
+		A1000004101A0008 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		A1000004101A0009 /* OfflineQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineQueue.swift; sourceTree = "<group>"; };
+		A1000004101A000A /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		A1000005101A0001 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A1000005101A0002 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		A1000005101A0003 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		A1000005101A0004 /* AnimationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationConstants.swift; sourceTree = "<group>"; };
+		A1000005101A0005 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		A1000005101A0006 /* KalmanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KalmanFilter.swift; sourceTree = "<group>"; };
+		A1000005101A0007 /* UnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverter.swift; sourceTree = "<group>"; };
+		A1000006101A0001 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		A1000006101A0002 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A1000006101A0003 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		A1000006101A0004 /* ProfileSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
+		A1000007101A0001 /* ActivitiesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesListView.swift; sourceTree = "<group>"; };
+		A1000007101A0002 /* ActivityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailView.swift; sourceTree = "<group>"; };
+		A1000007101A0003 /* ActivityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListView.swift; sourceTree = "<group>"; };
+		A1000007101A0004 /* ActivityRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRowView.swift; sourceTree = "<group>"; };
+		A1000007101A0005 /* EmptyActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyActivitiesView.swift; sourceTree = "<group>"; };
+		A1000008101A0001 /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
+		A1000008101A0002 /* ActivitySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySummaryView.swift; sourceTree = "<group>"; };
+		A1000009101A0001 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A1000009101A0002 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		A1000009101A0003 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A1000009101A0004 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		A1000009101A0005 /* DataExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExportView.swift; sourceTree = "<group>"; };
+		A100000A101A0001 /* NetworkStatusBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBanner.swift; sourceTree = "<group>"; };
+		A100000A101A0002 /* GPSSignalIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSSignalIndicator.swift; sourceTree = "<group>"; };
+		A100000A101A0003 /* LocationPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPermissionView.swift; sourceTree = "<group>"; };
+		A100000A101A0004 /* RouteMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapView.swift; sourceTree = "<group>"; };
+		A100000A101A0005 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
+		A100000A101A0006 /* SyncStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatusView.swift; sourceTree = "<group>"; };
+		A100000B101A0001 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
+		A100000C101A0001 /* GPSDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSDebugView.swift; sourceTree = "<group>"; };
+		A100000D101A0001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A100000D101A0002 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		A100000D101A0003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A100000E101A0001 /* MockActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockActivityService.swift; sourceTree = "<group>"; };
+		A100000E101A0002 /* ActivitiesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesViewModelTests.swift; sourceTree = "<group>"; };
+		A100000E101A0003 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		A100000E101A0004 /* KalmanFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KalmanFilterTests.swift; sourceTree = "<group>"; };
+		A100000E101A0005 /* FormattersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattersTests.swift; sourceTree = "<group>"; };
+		A100000E101A0006 /* OfflineQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineQueueTests.swift; sourceTree = "<group>"; };
+		A1FFFFFF401A0001 /* Trek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trek.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1FFFFFF401A0002 /* TrekTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1FFFFFF501A0001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1FFFFFF501A0002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1FFFFFF601A0001 = {
+			isa = PBXGroup;
+			children = (
+				A1FFFFFF601A0002 /* Trek */,
+				A1FFFFFF601A0003 /* TrekApp */,
+				A1FFFFFF601A0020 /* TrekTests */,
+				A1FFFFFF601A0099 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0002 /* Trek */ = {
+			isa = PBXGroup;
+			children = (
+				A1FFFFFF601A0004 /* App */,
+				A1FFFFFF601A0005 /* Models */,
+				A1FFFFFF601A0006 /* ViewModels */,
+				A1FFFFFF601A0007 /* Views */,
+				A1FFFFFF601A0008 /* Services */,
+				A1FFFFFF601A0009 /* Utilities */,
+				A1FFFFFF601A0010 /* Resources */,
+			);
+			path = Trek;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0003 /* TrekApp */ = {
+			isa = PBXGroup;
+			children = (
+				A100000D101A0001 /* Assets.xcassets */,
+			);
+			path = TrekApp;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0004 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A1000001101A0001 /* TrekApp.swift */,
+				A1000001101A0002 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0005 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1000002101A0001 /* User.swift */,
+				A1000002101A0002 /* Activity.swift */,
+				A1000002101A0003 /* ActivityType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0006 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A1000003101A0001 /* AuthViewModel.swift */,
+				A1000003101A0002 /* ActivitiesViewModel.swift */,
+				A1000003101A0003 /* ActivityDetailViewModel.swift */,
+				A1000003101A0004 /* ProfileViewModel.swift */,
+				A1000003101A0005 /* RecordingViewModel.swift */,
+				A1000003101A0006 /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A1FFFFFF601A0011 /* Auth */,
+				A1FFFFFF601A0012 /* Activities */,
+				A1FFFFFF601A0013 /* Recording */,
+				A1FFFFFF601A0014 /* Profile */,
+				A1FFFFFF601A0015 /* Components */,
+				A1FFFFFF601A0016 /* Launch */,
+				A1FFFFFF601A0017 /* Debug */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0008 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A1000004101A0001 /* AuthService.swift */,
+				A1000004101A0002 /* ActivityService.swift */,
+				A1000004101A0003 /* LocationService.swift */,
+				A1000004101A0004 /* StorageService.swift */,
+				A1000004101A0006 /* SyncService.swift */,
+				A1000004101A0007 /* CrashRecoveryService.swift */,
+				A1000004101A0008 /* NetworkMonitor.swift */,
+				A1000004101A0009 /* OfflineQueue.swift */,
+				A1000004101A000A /* CoreDataStack.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0009 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A1000005101A0001 /* Constants.swift */,
+				A1000005101A0002 /* Extensions.swift */,
+				A1000005101A0003 /* Formatters.swift */,
+				A1000005101A0004 /* AnimationConstants.swift */,
+				A1000005101A0005 /* HapticManager.swift */,
+				A1000005101A0006 /* KalmanFilter.swift */,
+				A1000005101A0007 /* UnitConverter.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0010 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A100000D101A0002 /* Colors.xcassets */,
+				A100000D101A0003 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0011 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				A1000006101A0001 /* OnboardingView.swift */,
+				A1000006101A0002 /* LoginView.swift */,
+				A1000006101A0003 /* SignUpView.swift */,
+				A1000006101A0004 /* ProfileSetupView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0012 /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				A1000007101A0001 /* ActivitiesListView.swift */,
+				A1000007101A0002 /* ActivityDetailView.swift */,
+				A1000007101A0003 /* ActivityListView.swift */,
+				A1000007101A0004 /* ActivityRowView.swift */,
+				A1000007101A0005 /* EmptyActivitiesView.swift */,
+			);
+			path = Activities;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0013 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				A1000008101A0001 /* RecordingView.swift */,
+				A1000008101A0002 /* ActivitySummaryView.swift */,
+			);
+			path = Recording;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0014 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				A1000009101A0001 /* ProfileView.swift */,
+				A1000009101A0002 /* EditProfileView.swift */,
+				A1000009101A0003 /* SettingsView.swift */,
+				A1000009101A0004 /* StatsView.swift */,
+				A1000009101A0005 /* DataExportView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0015 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A100000A101A0001 /* NetworkStatusBanner.swift */,
+				A100000A101A0002 /* GPSSignalIndicator.swift */,
+				A100000A101A0003 /* LocationPermissionView.swift */,
+				A100000A101A0004 /* RouteMapView.swift */,
+				A100000A101A0005 /* SkeletonView.swift */,
+				A100000A101A0006 /* SyncStatusView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0016 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				A100000B101A0001 /* LaunchScreenView.swift */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0017 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				A100000C101A0001 /* GPSDebugView.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0020 /* TrekTests */ = {
+			isa = PBXGroup;
+			children = (
+				A1FFFFFF601A0021 /* Mocks */,
+				A1FFFFFF601A0022 /* ViewModels */,
+				A1FFFFFF601A0023 /* Utilities */,
+				A1FFFFFF601A0024 /* Services */,
+			);
+			path = TrekTests;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0021 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A100000E101A0001 /* MockActivityService.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0022 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A100000E101A0002 /* ActivitiesViewModelTests.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0023 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A100000E101A0003 /* TestHelpers.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0024 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A100000E101A0004 /* KalmanFilterTests.swift */,
+				A100000E101A0005 /* FormattersTests.swift */,
+				A100000E101A0006 /* OfflineQueueTests.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A1FFFFFF601A0099 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1FFFFFF401A0001 /* Trek.app */,
+				A1FFFFFF401A0002 /* TrekTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1FFFFFF301A0001 /* Trek */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1FFFFFF701A0001 /* Build configuration list for PBXNativeTarget "Trek" */;
+			buildPhases = (
+				A1FFFFFF801A0001 /* Sources */,
+				A1FFFFFF501A0001 /* Frameworks */,
+				A1FFFFFF901A0001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Trek;
+			productName = Trek;
+			productReference = A1FFFFFF401A0001 /* Trek.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A1FFFFFF301A0002 /* TrekTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1FFFFFF701A0002 /* Build configuration list for PBXNativeTarget "TrekTests" */;
+			buildPhases = (
+				A1FFFFFF801A0002 /* Sources */,
+				A1FFFFFF501A0002 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A100000F001A0002 /* PBXTargetDependency */,
+			);
+			name = TrekTests;
+			productName = TrekTests;
+			productReference = A1FFFFFF401A0002 /* TrekTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1FFFFFF101A0001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A1FFFFFF301A0001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					A1FFFFFF301A0002 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = A1FFFFFF301A0001;
+					};
+				};
+			};
+			buildConfigurationList = A1FFFFFF701A0003 /* Build configuration list for PBXProject "Trek" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A1FFFFFF601A0001;
+			packageReferences = (
+			);
+			productRefGroup = A1FFFFFF601A0099 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1FFFFFF301A0001 /* Trek */,
+				A1FFFFFF301A0002 /* TrekTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1FFFFFF901A0001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A100000D201A0001 /* Assets.xcassets in Resources */,
+				A100000D201A0002 /* Colors.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1FFFFFF801A0001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001201A0001 /* TrekApp.swift in Sources */,
+				A1000001201A0002 /* ContentView.swift in Sources */,
+				A1000002201A0001 /* User.swift in Sources */,
+				A1000002201A0002 /* Activity.swift in Sources */,
+				A1000002201A0003 /* ActivityType.swift in Sources */,
+				A1000003201A0001 /* AuthViewModel.swift in Sources */,
+				A1000003201A0002 /* ActivitiesViewModel.swift in Sources */,
+				A1000003201A0003 /* ActivityDetailViewModel.swift in Sources */,
+				A1000003201A0004 /* ProfileViewModel.swift in Sources */,
+				A1000003201A0005 /* RecordingViewModel.swift in Sources */,
+				A1000003201A0006 /* SettingsViewModel.swift in Sources */,
+				A1000004201A0001 /* AuthService.swift in Sources */,
+				A1000004201A0002 /* ActivityService.swift in Sources */,
+				A1000004201A0003 /* LocationService.swift in Sources */,
+				A1000004201A0004 /* StorageService.swift in Sources */,
+				A1000004201A0006 /* SyncService.swift in Sources */,
+				A1000004201A0007 /* CrashRecoveryService.swift in Sources */,
+				A1000004201A0008 /* NetworkMonitor.swift in Sources */,
+				A1000004201A0009 /* OfflineQueue.swift in Sources */,
+				A1000004201A000A /* CoreDataStack.swift in Sources */,
+				A1000005201A0001 /* Constants.swift in Sources */,
+				A1000005201A0002 /* Extensions.swift in Sources */,
+				A1000005201A0003 /* Formatters.swift in Sources */,
+				A1000005201A0004 /* AnimationConstants.swift in Sources */,
+				A1000005201A0005 /* HapticManager.swift in Sources */,
+				A1000005201A0006 /* KalmanFilter.swift in Sources */,
+				A1000005201A0007 /* UnitConverter.swift in Sources */,
+				A1000006201A0001 /* OnboardingView.swift in Sources */,
+				A1000006201A0002 /* LoginView.swift in Sources */,
+				A1000006201A0003 /* SignUpView.swift in Sources */,
+				A1000006201A0004 /* ProfileSetupView.swift in Sources */,
+				A1000007201A0001 /* ActivitiesListView.swift in Sources */,
+				A1000007201A0002 /* ActivityDetailView.swift in Sources */,
+				A1000007201A0003 /* ActivityListView.swift in Sources */,
+				A1000007201A0004 /* ActivityRowView.swift in Sources */,
+				A1000007201A0005 /* EmptyActivitiesView.swift in Sources */,
+				A1000008201A0001 /* RecordingView.swift in Sources */,
+				A1000008201A0002 /* ActivitySummaryView.swift in Sources */,
+				A1000009201A0001 /* ProfileView.swift in Sources */,
+				A1000009201A0002 /* EditProfileView.swift in Sources */,
+				A1000009201A0003 /* SettingsView.swift in Sources */,
+				A1000009201A0004 /* StatsView.swift in Sources */,
+				A1000009201A0005 /* DataExportView.swift in Sources */,
+				A100000A201A0001 /* NetworkStatusBanner.swift in Sources */,
+				A100000A201A0002 /* GPSSignalIndicator.swift in Sources */,
+				A100000A201A0003 /* LocationPermissionView.swift in Sources */,
+				A100000A201A0004 /* RouteMapView.swift in Sources */,
+				A100000A201A0005 /* SkeletonView.swift in Sources */,
+				A100000A201A0006 /* SyncStatusView.swift in Sources */,
+				A100000B201A0001 /* LaunchScreenView.swift in Sources */,
+				A100000C201A0001 /* GPSDebugView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1FFFFFF801A0002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A100000E201A0001 /* MockActivityService.swift in Sources */,
+				A100000E201A0002 /* ActivitiesViewModelTests.swift in Sources */,
+				A100000E201A0003 /* TestHelpers.swift in Sources */,
+				A100000E201A0004 /* KalmanFilterTests.swift in Sources */,
+				A100000E201A0005 /* FormattersTests.swift in Sources */,
+				A100000E201A0006 /* OfflineQueueTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A100000F001A0002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1FFFFFF301A0001 /* Trek */;
+			targetProxy = A100000F001A0001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A1FFFFFFA01A0001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1FFFFFFA01A0002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A1FFFFFFA01A0003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G3Z9NCB98X;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Trek/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Trek;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Trek needs access to your camera to take photos during your activities.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Trek needs location access to track your activities even when the app is in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Trek needs your location to track your running and cycling activities with accurate distance and route information.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Trek needs access to your photo library to set your profile picture.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Trek uses tracking data to provide analytics and improve your experience.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Zqang.Trek;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A1FFFFFFA01A0004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G3Z9NCB98X;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Trek/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Trek;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Trek needs access to your camera to take photos during your activities.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Trek needs location access to track your activities even when the app is in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Trek needs your location to track your running and cycling activities with accurate distance and route information.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Trek needs access to your photo library to set your profile picture.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Trek uses tracking data to provide analytics and improve your experience.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Zqang.Trek;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A1FFFFFFA01A0005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trek.TrekTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trek.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Trek";
+			};
+			name = Debug;
+		};
+		A1FFFFFFA01A0006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trek.TrekTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trek.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Trek";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1FFFFFF701A0001 /* Build configuration list for PBXNativeTarget "Trek" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1FFFFFFA01A0003 /* Debug */,
+				A1FFFFFFA01A0004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1FFFFFF701A0002 /* Build configuration list for PBXNativeTarget "TrekTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1FFFFFFA01A0005 /* Debug */,
+				A1FFFFFFA01A0006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1FFFFFF701A0003 /* Build configuration list for PBXProject "Trek" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1FFFFFFA01A0001 /* Debug */,
+				A1FFFFFFA01A0002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1FFFFFF101A0001 /* Project object */;
+}
